@@ -38,5 +38,5 @@ pip install pandas scikit-learn
 
 ## Dataset Citation
 
-This work uses the [Anime Recommendations Database](https://www.kaggle.com/datasets/CooperUnion/anime-recommendations-database) dataset, made available by Cooper Union for the Advancement of Science and Art on Kaggle. Special thanks to Cooper Union and the dataset creators for making this data available.
+This work uses the [Anime Recommendations Database](https://www.kaggle.com/datasets/hernan4444/anime-recommendation-database-2020) dataset, made available by Hernan Valdivieso for the Advancement of Science and Art on Kaggle. Special thanks to Hernan Valdivieso and the dataset creators for making this data available.
 
