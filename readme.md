@@ -32,7 +32,7 @@ The user is prompted to enter two indices of the anime titles to be compared. Th
 
 ## Installation
 
-To use this project, you must have Python 3.x and the required libraries installed. You can install them using pip:
+To use this project, you must have Python 3.10.6 and the required libraries installed. You can install them using pip:
 
 pip install pandas scikit-learn
 
