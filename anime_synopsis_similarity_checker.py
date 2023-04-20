@@ -5,23 +5,16 @@ from sklearn.metrics.pairwise import cosine_similarity
 #endregion
 #region Definição de variaveis
 caminho_arquivo = './anime_with_synopsis.csv' # Define o caminho do arquivo CSV
-chunk_size = 10000  # 10 mil linhas por chunk # Define o tamanho do chunk
+chunk_size = 4000  # 10 mil linhas por chunk # Define o tamanho do chunk
 df = pd.DataFrame() # Define um DataFrame vazio
 #endregion
 #region Leitura do arquivo e transformação em dataframe
-# Itera sobre cada chunk do arquivo CSV
+
 for chunk in pd.read_csv(caminho_arquivo, chunksize=chunk_size):
-    # Processa ou concatena o chunk com outros chunks
-    # Exemplo: 
-    # do something with chunk
-    # df = pd.concat([df, chunk], axis=0)
-    
-    # Exemplo: Concatena o chunk com o DataFrame vazio
     df = pd.concat([df, chunk], axis=0)
 
 
 #endregion
-
 #region Vetorização
 #df['synopsis'] = df['synopsis'].fillna('')#Preencher colunas vazias com uma string vazia. (Já realizado e salvo no dataset)
 
@@ -46,9 +39,9 @@ vocab = vectorizer.get_feature_names_out()
 
 
 #print(vocab) # Exibe as palavras vetorizadas
-
+#endregion
 choice = input("What would you like to do?\n1. Compare two anime titles\n2. Find the most similar anime titles based on your title\nEnter your choice (1 or 2): ")
-
+#region Option 1 - Comparison
 if choice == '1':
     # Obtém as matrizes de vetorização das sinopses na linha 100 e na linha 200
     valor1 = int(input("Digite um índice de titulo do dataset (0 - 16213) para ser comparado: "))
@@ -66,6 +59,8 @@ if choice == '1':
     similarity = cosine_similarity(synopsis_1, synopsis_2)
 
     print(f"\nOs titulos escolhidos foram:\n 1 - '{titulo_1}'\n 2 - '{titulo_2}'\nA similaridade cosseno desses titulos é de: {similarity[0][0]:.2f}")
+#endregion
+#region Option 2 - Most Similar
 
 elif choice == '2':
     # Obtém o índice do título selecionado
@@ -93,7 +88,8 @@ elif choice == '2':
         titulo = df.iloc[indice, 0]
         similaridade = similaridades[indice]
         print(f"'{titulo}' (similaridade cosseno: {similaridade:.2f})")
-
+#endregion
+#region Option 3 - Error
 else:
     # If user input is invalid, display error message
     print("Invalid choice. Please try again.")
@@ -101,9 +97,8 @@ else:
 #endregion
 #region Exibição visual do dataframe
 '''
-print(df.columns)# Mostra apenas as colunas do DataFrame
-
-print(df)
+print(df.columns)# Mostra apenas o titulo das colunas do DataFrame
+print(df)#Mostra todo o dataset
 print(df['sypnopsis'])# Mostra apenas a coluna "synopsis
 '''
 #endregion
