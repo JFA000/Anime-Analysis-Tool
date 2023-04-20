@@ -23,7 +23,7 @@ for chunk in pd.read_csv(caminho_arquivo, chunksize=chunk_size):
 #endregion
 
 #region Vetorização
-df['synopsis'] = df['synopsis'].fillna('')#Preencher colunas vazias com uma string vazia. (Já realizado e salvo no dataset)
+#df['synopsis'] = df['synopsis'].fillna('')#Preencher colunas vazias com uma string vazia. (Já realizado e salvo no dataset)
 
 
 # Define o objeto CountVectorizer
@@ -47,7 +47,7 @@ vocab = vectorizer.get_feature_names_out()
 
 #print(vocab) # Exibe as palavras vetorizadas
 
-choice = input("Enter 1 for a comparison between two anime titles or 2 for finding most similar anime titles based on your title: ")
+choice = input("What would you like to do?\n1. Compare two anime titles\n2. Find the most similar anime titles based on your title\nEnter your choice (1 or 2): ")
 
 if choice == '1':
     # Obtém as matrizes de vetorização das sinopses na linha 100 e na linha 200
@@ -100,8 +100,10 @@ else:
 
 #endregion
 #region Exibição visual do dataframe
-#print(df.columns)# Mostra apenas as colunas do DataFrame
-#df.to_csv('anime_with_synopsis.csv', index=False) #Utilizado para salvar o arquivo editado com  todas as stop words removidas
-#print(df)
-#print(df['sypnopsis'])# Mostra apenas a coluna "synopsis"
+'''
+print(df.columns)# Mostra apenas as colunas do DataFrame
+
+print(df)
+print(df['sypnopsis'])# Mostra apenas a coluna "synopsis
+'''
 #endregion
