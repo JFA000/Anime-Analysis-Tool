@@ -11,9 +11,9 @@ def remove_stopwords(text):
     
     
     df['synopsis'] = df['synopsis'].fillna('')
-    df['sypnopsis'] = df['sypnopsis'].apply(remove_stopwords)# Aplica a função à coluna "synopsis"
-    df = df.rename(columns={'sypnopsis': 'synopsis'}) #Sim, o arquivo original veio escrito 'sypnopsis' 
-    df = df.drop(columns=['MAL_ID', 'Score','Genres']) # Remove a coluna de ID, Score e Generos.
+    df['sypnopsis'] = df['sypnopsis'].apply(remove_stopwords)# Apply the function to the "synopsis" column
+    df = df.rename(columns={'sypnopsis': 'synopsis'}) #Rename the mistype
+    df = df.drop(columns=['MAL_ID', 'Score','Genres']) # Remove the ID, Score, and Genres columns.
     return ' '.join(filtered_words)
 
-df.to_csv('anime_with_synopsis.csv', index=False) #Utilizado para salvar o arquivo editado com  todas as stop words removidas
+df.to_csv('anime_with_synopsis.csv', index=False) #Used to save the edited file with all stop words removed.
