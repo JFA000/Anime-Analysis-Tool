@@ -5,35 +5,26 @@ from sklearn.metrics.pairwise import cosine_similarity
 import difflib
 #endregion
 #region Variables definition
-file_path = './anime_with_synopsis.csv' # Set the path of the CSV file
+csv_path = './anime_with_synopsis.csv' # Set the path of the CSV file
 chunk_size = 4000  # Set the chunk size
 df = pd.DataFrame() # Instantiate an empty DataFrame
-selected_title = 0
+selected_title = None
 #endregion
 #region Reading the file and transforming it into a dataframe
-
-for chunk in pd.read_csv(file_path, chunksize=chunk_size):
+for chunk in pd.read_csv(csv_path, chunksize=chunk_size):
     df = pd.concat([df, chunk], axis=0)
-
-
 #endregion
 #region Vectorization
-
 df['synopsis'] = df['synopsis'].fillna('') #Fill empty columns with an empty string
 vectorizer = CountVectorizer() # Instantiate the CountVectorizer object
 synopsis_matrix = vectorizer.fit_transform(df['synopsis']) # Create the token count matrix for the 'synopsis' column
 vocab = vectorizer.get_feature_names_out() # Get the vocabulary (list of words) of the vectorizer
-
-#print(vocab) # Display the vectorized words
 #endregion
 #region Database search
 print("\n╔══════════════════════════════════════════╗")
 print("║   Welcome to anime comparison program!   ║")
 print("╚══════════════════════════════════════════╝")
-
-
-# Check if the selected title is in the anime list
-selected_title = ""
+#Check if the selected title is in the anime list
 while not selected_title:
     selected_title = input("\nEnter the title of the anime you want to search for: ").strip().upper()
 
@@ -55,43 +46,49 @@ else:
             if len(existing_words) > 0:
                 suggested_title = ' '.join(existing_words)
                 if suggested_title == selected_title:
-                    response = input("\nThe search did not yield any results or suggestions. Do you want to perform a new search? (y/n) ")
-                    if response.lower() == 'n':
-                        exit()
+                    response = input("\nThe search did not yield any results or suggestions. Do you want to perform a new search? (y/n): ")
+                    if response.lower() == 'n' or response.lower() == 'y':
+                        if response.lower() == 'n':
+                            exit()
+                        else:
+                            selected_title = input("\nEnter the anime you want to compare: ").strip().upper()
                     else:
-                        selected_title = input("\nEnter the anime you want to compare").strip().upper()
+                        print("\nInvalid input. Please enter 'y' or 'n'.")
                 else:
-                    selected_title = suggested_title
-                    print(f"\nThe search did not yield any results. We suggest searching for: '{selected_title}'.")
+                    title3 = suggested_title
+                    print(f"\nThe search did not yield any results. We suggest searching for: '{suggested_title}'.")
+                    selected_title = title3  # Change selected_title to title3
             else:
-                response = input("\nThe search did not yield any results or suggestions. Do you want to perform a new search? (y/n) ")
-                if response.lower() == 'n':
-                    exit()
+                response = input("\nThe search did not yield any results or suggestions. Do you want to perform a new search? (y/n): ")
+                if response.lower() == 'n' or response.lower() == 'y':
+                    if response.lower() == 'n':
+                            exit()
+                    else:
+                            selected_title = input("\nEnter the anime you want to compare: ").strip().upper()
                 else:
-                    selected_title = input("\nEnter the anime you want to compare").strip().upper()
+                    print("\nInvalid input. Please enter 'y' or 'n'.")
 
-
+if selected_title != title3:
+    print(f"Match found for: '{title3}'.")
+    selected_title = title3
+#endregion 
+#region Show vocabulary and similar titles
+selected_anime = df[df['Name'].str.upper() == selected_title.upper()]
+selected_synopsis_matrix = vectorizer.transform(selected_anime['synopsis']).toarray()
+selected_vocab = vectorizer.get_feature_names_out()
+print(f"\nThe {selected_title.title()} vocabulary is: ")
+print([word for word in selected_vocab if selected_synopsis_matrix[0, vectorizer.vocabulary_[word]] != 0])
     # Get the synopsis of the selected title
 selected_synopsis = synopsis_matrix[df['Name'] == title3]
-
     # Calculate the cosine similarity between the selected synopsis and the synopses of all other titles
 similarities = cosine_similarity(selected_synopsis, synopsis_matrix).flatten()
-
     # Get the indices of the titles in descending order of similarity
-decreasing_similarity_indices = similarities.argsort()[::-1][1:6]
-
-print(f"\nThe five most similar titles to '{title3}' are:\n")
-for indice in decreasing_similarity_indices:
-    title = df.iloc[indice, 0]
-    similarity = similarities[indice]
-    print(f"'{title}' (cosine similarity: {similarity:.2f})")
-
-
-#endregion
-#region Visual display of the dataframe
-'''
-print(df.columns)# column only
-print(df)#Everything
-print(df['sypnopsis'])# synopsis only
-'''
+decreasing_similarity_indices = similarities.argsort()[::-1][1:11]
+print(f"\nThe ten most similar titles to '{title3}' are:\n")
+n= 1
+for i in decreasing_similarity_indices:
+    title = df.iloc[i, 0]
+    similarity = similarities[i]
+    print(f"{n}: '{title}' (cosine similarity: {similarity:.2f})")
+    n+=1
 #endregion

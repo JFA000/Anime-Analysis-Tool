@@ -1,42 +1,34 @@
 # Anime Synopsis Similarity
 
-This is a Python project that aims to find the most similar animes in terms of synopsis using cosine similarity. To do this, we use a dataset with anime titles and their respective synopses.
+The Anime Synopsis Similarity Checker is a Python program that allows users to find the most similar anime titles based on their synopses using cosine similarity. It uses a dataset with anime titles and their respective synopses to perform the similarity check.
 
-## Libraries used
+## Dependencies
+The Anime Synopsis Similarity Checker program depends on the following Python libraries:
 
-The following libraries are used in this project:
+    'pandas'
+    'scikit-learn' 
+    'difflib'
+    'nltk'
 
-    'pandas'(version 1.3.2)
-    'sklearn'(version 1.0.1)
+To install these dependencies, you can use pip, a package manager for Python. Open your terminal or command prompt and run the following commands:
 
-## Variables defined
+    'pip install pandas'
+    'pip install scikit-learn'
+    'pip install difflib'
+    'pip install nltk'
 
-The variables defined in this project are:
+## Usage
+The program has two main parts: dataset preparation and similarity checking. To use the program, first, download the scripts and the database and put them in the same folder. Then, execute the python script prepare_dataset.py to create the database so the program can work with it. This is a one-time process.
+    
+    'python prepare_dataset.py'
+   
+After the dataset is created, execute the anime_synopsis_similarity_checker.py and follow the program instructions.
+    
+    'python anime_synopsis_similarity_checker.py'
+    
+Once the program is running, the user is prompted to enter the title of the anime they want to search for. If the title is found in the dataset, the program returns the synopsis of the anime and a list of the most similar anime titles based on their synopses.
 
-    caminho_arquivo: a string that defines the path to the CSV file with the anime titles and synopses.
-    chunk_size: an integer that defines the number of lines per chunk to be processed when reading the CSV file.
-    df: an empty pandas DataFrame that will store the anime titles and synopses.
-
-## Reading and transforming the file into a DataFrame
-
-The file is read in chunks and each chunk is processed or concatenated with other chunks, as necessary. After all the chunks are processed, the resulting DataFrame contains all the anime titles and synopses.
-Stopwords removed
-
-The remove_stopwords function is used to remove stopwords from the synopses. This function has already been used in a previous file and is defined in the same file.
-Vectorization
-
-The synopses are vectorized using the CountVectorizer class from the sklearn library. The resulting matrix of token counts is used to calculate the cosine similarity between synopses.
-How to use
-
-The user is prompted to enter two indices of the anime titles to be compared. The cosine similarity between the synopses of these titles is then calculated and displayed. The user is then prompted to enter an index of an anime title to find the five most similar titles. The titles are displayed in descending order of similarity.
-
-## Installation
-
-To use this project, you must have Python 3.10.6 and the required libraries installed. You can install them using pip:
-
-pip install pandas scikit-learn
-
-## Dataset Citation
-
+## Credits and Citations 
 This work uses the [Anime Recommendations Database](https://www.kaggle.com/datasets/hernan4444/anime-recommendation-database-2020) dataset, made available by Hernan Valdivieso for the Advancement of Science and Art on Kaggle. Special thanks to Hernan Valdivieso and the dataset creators for making this data available.
 
+This program was created by Jonatas Fernandes Andrade and Gabriel Medina da Assunção.
