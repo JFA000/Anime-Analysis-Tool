@@ -1,6 +1,7 @@
-import pandas as pd
+import nltk, pandas as pd
 from nltk.corpus import stopwords
 
+nltk.download('stopwords')
 df = pd.read_csv('old_anime_with_synopsis.csv')
 
 def remove_stopwords(df):
