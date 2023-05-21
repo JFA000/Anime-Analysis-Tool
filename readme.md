@@ -2,21 +2,6 @@
 
 The Anime Synopsis Similarity Checker is a Python program that allows users to find the most similar anime titles based on their synopses using cosine similarity. It uses a dataset with anime titles and their respective synopses to perform the similarity check.
 
-## Dependencies
-The Anime Synopsis Similarity Checker program depends on the following Python libraries:
-
-    'pandas'
-    'scikit-learn' 
-    'difflib'
-    'nltk'
-
-To install these dependencies, you can use pip, a package manager for Python. Open your terminal or command prompt and run the following commands:
-
-    'pip install pandas'
-    'pip install scikit-learn'
-    'pip install difflib'
-    'pip install nltk'
-
 ## Usage
 The program has two main parts: dataset preparation and similarity checking. To use the program, first, download the scripts and the database and put them in the same folder. Then, execute the python script prepare_dataset.py to create the database so the program can work with it. This is a one-time process.
     
@@ -31,4 +16,4 @@ Once the program is running, the user is prompted to enter the title of the anim
 ## Credits and Citations 
 This work uses the [Anime Recommendations Database](https://www.kaggle.com/datasets/hernan4444/anime-recommendation-database-2020) dataset, made available by Hernan Valdivieso for the Advancement of Science and Art on Kaggle. Special thanks to Hernan Valdivieso and the dataset creators for making this data available.
 
-This program was created by Jonatas Fernandes Andrade and Gabriel Medina da Assunção.
+This program was created by [Jonatas Fernandes Andrade](https://github.com/JFA000) and [Gabriel Medina da Assunção](https://github.com/gabs4841).

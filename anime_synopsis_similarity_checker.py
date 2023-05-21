@@ -1,8 +1,7 @@
 #region Imports
-import pandas as pd
+import pandas as pd, difflib, math 
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-import difflib
 #endregion
 #region Variables definition
 csv_path = './anime_with_synopsis.csv' # Set the path of the CSV file
@@ -89,6 +88,7 @@ n= 1
 for i in decreasing_similarity_indices:
     title = df.iloc[i, 0]
     similarity = similarities[i]
-    print(f"{n}: '{title}' (cosine similarity: {similarity:.2f})")
+    similarity_deg = math.degrees(math.acos(similarity))
+    print(f"{n:2}: '{title:50}' (cosine similarity: {similarity:.2f}/{similarity_deg:.2f}°)")
     n+=1
 #endregion
