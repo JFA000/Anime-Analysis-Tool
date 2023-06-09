@@ -9,7 +9,7 @@ def remove_stopwords(df):
     df['sypnopsis'] = df['sypnopsis'].fillna('')
     df['sypnopsis'] = df['sypnopsis'].apply(lambda x: ' '.join([word for word in x.split() if word.lower() not in stop_words]))
     df = df.rename(columns={'sypnopsis': 'synopsis'})
-    df = df.drop(columns=['MAL_ID', 'Score', 'Genres'])
+    #df = df.drop(columns=['MAL_ID', 'Score', 'Genres']) Not needed.
     return df
 
 df = remove_stopwords(df)
