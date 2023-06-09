@@ -77,6 +77,23 @@ selected_synopsis_matrix = vectorizer.transform(selected_anime['synopsis']).toar
 selected_vocab = vectorizer.get_feature_names_out()
 print(f"\nThe {selected_title.title()} vocabulary is: ")
 print([word for word in selected_vocab if selected_synopsis_matrix[0, vectorizer.vocabulary_[word]] != 0])
+
+def show_selected_title_genres():
+    # select the first row from selected_anime
+    row = selected_anime.iloc[0]
+
+    # get the value of the column containing the genres
+    value = row['Genres'] # change 'genres' to the name of the column containing the genres
+
+    
+    genres = value.split(',')
+
+    # print each genre separately
+    print("\nThe selected title genres are:")
+    for genre in genres:
+        print(genre)
+
+show_selected_title_genres()
     # Get the synopsis of the selected title
 selected_synopsis = synopsis_matrix[df['Name'] == title3]
     # Calculate the cosine similarity between the selected synopsis and the synopses of all other titles
@@ -84,11 +101,12 @@ similarities = cosine_similarity(selected_synopsis, synopsis_matrix).flatten()
     # Get the indices of the titles in descending order of similarity
 decreasing_similarity_indices = similarities.argsort()[::-1][1:11]
 print(f"\nThe ten most similar titles to '{title3}' are:\n")
-n= 1
+counter= 1
 for i in decreasing_similarity_indices:
-    title = df.iloc[i, 0]
+    title = df.iloc[i, 1]
+    genre = df.iloc[i, 3]
     similarity = similarities[i]
     similarity_deg = math.degrees(math.acos(similarity))
-    print(f"{n:2}: '{title:50}' (cosine similarity: {similarity:.2f}/{similarity_deg:.2f}°)")
-    n+=1
+    print(f"{counter:2}: '{title}'  \nGenres: {genre}\nCosine similarity: {similarity:.2f}/{similarity_deg:.2f}°.\n")
+    counter+=1
 #endregion
