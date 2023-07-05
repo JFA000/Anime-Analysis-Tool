@@ -13,11 +13,6 @@ After the dataset is created, execute the anime_synopsis_similarity_checker.py a
     
 Once the program is running, the user is prompted to enter the title of the anime they want to search for. If the title is found in the dataset, the program returns the synopsis of the anime and a list of the most similar anime titles based on their synopses.
 
-## References
-In some exercises, it was necessary to search for concepts and studies externally. Here are these references:
-Referencias usadas na pasta de Estudos:
-
-https://brasilescola.uol.com.br/matematica/triangulo.htm
 ## Credits and Citations 
 This work uses the [Anime Recommendations Database](https://www.kaggle.com/datasets/hernan4444/anime-recommendation-database-2020) dataset, made available by Hernan Valdivieso for the Advancement of Science and Art on Kaggle. Special thanks to Hernan Valdivieso and the dataset creators for making this data available.
 
