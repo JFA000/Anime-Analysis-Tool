@@ -4,7 +4,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 #endregion
 #region Variables definition
-csv_path = './anime_with_synopsis.csv' # Set the path of the CSV file
+csv_path = './anime_with_synopsis_cleaned.csv' # Set the path of the CSV file
 chunk_size = 4000  # Set the chunk size
 df = pd.DataFrame() # Instantiate an empty DataFrame
 selected_title = None
