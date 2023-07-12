@@ -1,5 +1,5 @@
 #region Imports
-import pandas as pd, difflib, math 
+import pandas as pd, matplotlib.pyplot as plt
 #endregion
 #region Variables definition
 csv_path = './anime_with_synopsis.csv' # Set the path of the CSV file
@@ -23,7 +23,6 @@ filtered_df = filtered_df.dropna(subset=['Score'])
 sorted_df = filtered_df.sort_values('Score', ascending=False) #Sort in descending order
 top_10_animes = sorted_df.head(10)
 print(top_10_animes[['Name', 'Score']].to_string(index=False))
-
 
 
 print("\nThe 10 genres that appear the most among them are:")
@@ -98,3 +97,32 @@ print(f"You selected {genre}.\nShowing top 10 animes with the {genre} genre: ")
 
 top10chosen = filter_by_genre(genre)
 print(top10chosen.to_string(index=False))
+#Using Matplotlib
+
+sorted_df['Score'] = sorted_df['Score'].astype(float)
+x = sorted_df['Name'].values[:10]
+y = sorted_df['Score'].values[:10]
+
+plt.figure(figsize=(10, 6)) # ajustando o tamanho da figura
+
+plt.bar(x, y)
+
+# adicionando os nomes dos animes no eixo x
+plt.xticks(x, x)
+
+# rotacionando os rótulos do eixo x para melhor legibilidade
+plt.xticks(rotation=90)
+
+# nomeando o eixo x
+plt.xlabel('Anime')
+
+# nomeando o eixo y
+plt.ylabel('Score')
+
+# dando um título ao gráfico
+plt.title('Top 10 Anime por Score')
+
+plt.ylim(min(y) - 0.5, max(y) + 0.5) 
+
+# mostrando o gráfico
+plt.show()
