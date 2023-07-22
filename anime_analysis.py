@@ -1,16 +1,11 @@
-#region Imports
 import pandas as pd, matplotlib.pyplot as plt, csv
-#endregion
-#region Variables definition
 csv_path = './anime_with_synopsis.csv' # Set the path of the CSV file
 chunk_size = 4000  # Set the chunk size
 df = pd.DataFrame() # Instantiate an empty DataFrame
 selected_title = None
-#endregion
-#region Reading the file and transforming it into a dataframe
 for chunk in pd.read_csv(csv_path, chunksize=chunk_size):
     df = pd.concat([df, chunk], axis=0)
-#endregion
+
 
 print("\n╔══════════════════════════════════════════╗")
 print("║  Welcome to the anime analysis program!  ║")
@@ -25,14 +20,12 @@ sorted_df['Score'] = sorted_df['Score'].astype(float)
 top_10_animes = sorted_df.head(10)
 print(top_10_animes[['Name', 'Score']].to_string(index=False))
 
-
 print("\nThe 10 genres that appear the most among them are:")
 genre_lists = top_10_animes['Genres'].str.split(',')
 genres = [genre.strip() for genre_list in genre_lists for genre in genre_list]
 genre_counts = pd.Series(genres).value_counts()
 genre_count_str = genre_counts.to_string()
 lines = genre_count_str.split('\n')
-
 for line in lines[:10]:
     print(line + ' times')
 
@@ -78,6 +71,7 @@ def plot(df,dfxlabel,dfylabel,dftitle):
     plt.show()
 
 genre_dict = get_genres(csv_path)
+
 def select_genre():    
     for key, value in genre_dict.items():
        print(f"{key}: {value}")
@@ -90,7 +84,6 @@ print(top10chosen.to_string(index=False))
 
 plot(sorted_df,'Name','Score','Top 10 Animes by Score')
 
-
 result = {}
 for genre in genre_dict.values():
     if genre != "Genres":
@@ -99,7 +92,6 @@ for genre in genre_dict.values():
         result[genre] = genre_df['Score'].mean()
 
 genres_average_df = pd.DataFrame(result.items(), columns=['Genre', 'Average Score'])
-print(genres_average_df)
 
 plt.figure(figsize=(10, 6))
 plt.bar(genres_average_df['Genre'], genres_average_df['Average Score'])
