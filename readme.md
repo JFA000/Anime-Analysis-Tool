@@ -1,8 +1,7 @@
 # Project Description
 
 The Anime Synopsis Similarity Checker is a Python program that allows users to find the most similar anime titles based on their synopses using cosine similarity. It uses a dataset with anime titles and their respective synopses to perform the similarity check.
-The Anime Analysis is ...
-#TODO: Add more details about the Anime Analysis program.
+The Anime Analysis is Python program that creates an analysis about the animes on the csv files, showing averages and creating plots for visualization
 
 ## Usage
 The program has two three parts: dataset preparation, similarity checking and analysis. To use the program, first, download the scripts and the database and put them in the same folder. Then, execute the python script `prepare_dataset.py` to create the database so the program can work with it. This is a one-time process.
@@ -19,7 +18,7 @@ To use the Anime Analysis program, execute the `anime_analysis.py` and follow th
     
     python anime_analysis.py
 
-Once the program is running, #TODO: Add more details about the Anime Analysis program.
+Once the program is running, the program will request user inputs and automatically create plots based on the user input.
 ## Credits and Citations 
 This work uses the [Anime Recommendations Database](https://www.kaggle.com/datasets/hernan4444/anime-recommendation-database-2020) dataset, made available by Hernan Valdivieso. Special thanks to Hernan Valdivieso and the dataset creators for making this data available.
 
