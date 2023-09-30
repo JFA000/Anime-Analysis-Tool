@@ -13,4 +13,4 @@ def remove_stopwords(df):
 
 df = remove_stopwords(df)
 df.to_csv('anime_with_synopsis_cleaned.csv', index=False)
-print("Execution successful. The database 'anime_with_synopsis.csv' is now available for use.")
+print("Execution successful. The database 'anime_with_synopsis_cleaned.csv' is now available for use.")
