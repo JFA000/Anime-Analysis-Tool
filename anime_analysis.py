@@ -1,11 +1,10 @@
-import pandas as pd, matplotlib.pyplot as plt, csv
+import pandas as pd, matplotlib.pyplot as plt, seaborn as sns ,csv
 csv_path = './anime_with_synopsis.csv' # Set the path of the CSV file
 chunk_size = 4000  # Set the chunk size
 df = pd.DataFrame() # Instantiate an empty DataFrame
 selected_title = None
 for chunk in pd.read_csv(csv_path, chunksize=chunk_size):
     df = pd.concat([df, chunk], axis=0)
-
 
 print("\n╔══════════════════════════════════════════╗")
 print("║  Welcome to the anime analysis program!  ║")
@@ -28,6 +27,7 @@ genre_count_str = genre_counts.to_string()
 lines = genre_count_str.split('\n')
 for line in lines[:10]:
     print(line + ' times')
+print("")
 
 def filter_by_genre(genre):
     filtered_df = df[df['Genres'].str.contains(genre)]
@@ -54,36 +54,54 @@ def get_genres(csv_path):
     
     return genre_dict
 
+import matplotlib.pyplot as plt
+import seaborn as sns
+from matplotlib.ticker import FixedLocator
+
 def plot(df,dfxlabel,dfylabel,dftitle):
     
-    x = df[dfxlabel].values[:10]
-    y = df[dfylabel].values[:10]
+    x = df[dfxlabel].values
+    y = df[dfylabel].values
     
-
-    plt.figure(figsize=(13, 7)) # 1300*700
-    plt.xticks(rotation=90)
+    plt.figure(figsize=(500, 70)) # 1300*700
+    sns.set_style('darkgrid')
     plt.xlabel(dfxlabel)
     plt.ylabel(dfylabel)
     plt.title(dftitle)
-    plt.ylim(min(y)-0.1, max(y)+0.01) 
-    
-    plt.bar(x, y)
-    plt.show()
+    plt.ylim(min(y)-0.1, max(y)+0.01)
+    plt.xticks(fontsize=8)
+
+    # Create the barplot and get the plot object
+    barplot = sns.barplot(x=x, y=y,color='tan')
+
+    # Get the x-axis labels from the plot object
+    x_labels = barplot.get_xticklabels()
+
+    # Set the x-ticks using FixedLocator
+    barplot.xaxis.set_major_locator(FixedLocator(range(len(x_labels))))
+
+    # Show the values for each bar
+    for index, value in enumerate(y):
+        plt.text(index, value - 0.05, str(value), color='black', ha="center")
+
+    # Set the x-axis labels on the plot object
+    lenght = 22
+    barplot.set_xticklabels([label.get_text()[:lenght]+'...' if len(label.get_text())>lenght else label.get_text() for label in x_labels])
 
 genre_dict = get_genres(csv_path)
-
 def select_genre():    
     for key, value in genre_dict.items():
        print(f"{key}: {value}")
-    genre = genre_dict.get(int(input("Enter the genre number you want to select (1-43): ")))
-    print(f"You selected {genre}.\nShowing top 10 animes with the {genre} genre: ")
+    genre = genre_dict.get(int(input("Enter the genre number you want to select (1-43): ")))   
     return genre
 
-top10chosen = filter_by_genre(select_genre())
-print(top10chosen.to_string(index=False))
+selected_genre = select_genre() 
+top10chosen = filter_by_genre(selected_genre)
 
-plot(sorted_df,'Name','Score','Top 10 Animes by Score')
-
+print(f"\nYou selected {selected_genre}.\nShowing top 10 animes with the {selected_genre} genre: \n")
+print(top10chosen[['Name', 'Score']].to_string(index=False))
+plot(top10chosen,'Name','Score',f'Top 10 {selected_genre} Animes by Score')
+plt.show()
 result = {}
 for genre in genre_dict.values():
     if genre != "Genres":
@@ -92,11 +110,16 @@ for genre in genre_dict.values():
         result[genre] = genre_df['Score'].mean()
 
 genres_average_df = pd.DataFrame(result.items(), columns=['Genre', 'Average Score'])
+genres_average_df = genres_average_df.sort_values(by='Average Score', ascending=False)
+top_genres_average_df = genres_average_df.head(10)
+#plot(genres_average_df,'Genre','Average Score','Top Genres by Score')
 
-plt.figure(figsize=(10, 6))
-plt.bar(genres_average_df['Genre'], genres_average_df['Average Score'])
-plt.xlabel('Genre')
-plt.ylabel('Average Score')
-plt.title('Genre average score')
-plt.ylim(min(genres_average_df['Average Score'])-0.1, max(genres_average_df['Average Score'])+0.01) 
+'''
+plt.figure(figsize=(13, 6))
+sns.set_style('darkgrid')
+sns.barplot(x=top_genres_average_df['Genre'], y=top_genres_average_df['Average Score'],color='tan')
+plt.xlabel("Genres")
+plt.ylabel("")
+plt.ylim(6.5, 7.2)
 plt.show()
+'''
