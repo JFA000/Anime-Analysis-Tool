@@ -5,8 +5,10 @@ csv_path = './anime_with_synopsis.csv' # Set the path of the CSV file
 chunk_size = 4000  # Set the chunk size
 df = pd.DataFrame() # Instantiate an empty DataFrame
 selected_title = None
+plt.rcParams['font.family'] = 'Arial'
 for chunk in pd.read_csv(csv_path, chunksize=chunk_size):
     df = pd.concat([df, chunk], axis=0)
+
 #endregion
 #region Functions
 def filter_by_genre(genre):
@@ -57,8 +59,8 @@ def plot(df,dfxlabel,dfylabel,dftitle):
     
     plt.figure(figsize=(50, 7))
     sns.set_style('darkgrid')
-    plt.xlabel(dfxlabel)
-    plt.ylabel(dfylabel)
+    plt.xlabel("")
+    plt.ylabel("")
     plt.title(dftitle)
     plt.ylim(min(y)-0.1, max(y)+0.01)
     plt.xticks(fontsize=8)
@@ -75,7 +77,6 @@ def plot(df,dfxlabel,dfylabel,dftitle):
     # Show the values for each bar
     for index, value in enumerate(y):
         plt.text(index, value - 0.05, str(round(value, 2)), color='black', ha="center")
-
 
     # Set the x-axis labels on the plot object
     lenght = 22
@@ -121,8 +122,8 @@ genres_average_df = genres_average_df.sort_values(by='Average Score', ascending=
 top_genres_average_df = genres_average_df.head(10)
 plot(genres_average_df,'Genre','Average Score','Top Genres by Score')
 plt.xticks(rotation=45)
-
-plt.show()
+plt.savefig('Plots/Genre Score Distribution.png', dpi=300, bbox_inches='tight')
+print("\nA file with the name `Genre Score Distribution.png` was created and contains the distribution of genres by score!\n")
 #endregion
 #region Plot by Genre Selection
 
@@ -134,6 +135,6 @@ top10chosen = filter_by_genre(selected_genre)
 print(f"\nYou selected {selected_genre}.\nShowing top 10 animes with the {selected_genre} genre: \n")
 print(top10chosen[['Name', 'Score']].to_string(index=False))
 plot(top10chosen,'Name','Score',f'Top 10 {selected_genre} Animes by Score')
-
-plt.show()
+plt.savefig(f'Plots/Top {selected_genre} by Scores.png', dpi=300, bbox_inches='tight')
+print(f"\nA file with the name `Top {selected_genre} by Scores.png` was created and contains the top {selected_genre} by score!\n")
 #endregion
