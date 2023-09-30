@@ -7,8 +7,6 @@ df = pd.DataFrame() # Instantiate an empty DataFrame
 selected_title = None
 for chunk in pd.read_csv(csv_path, chunksize=chunk_size):
     df = pd.concat([df, chunk], axis=0)
-
-
 #endregion
 #region Functions
 def filter_by_genre(genre):
@@ -83,11 +81,11 @@ def plot(df,dfxlabel,dfylabel,dftitle):
     lenght = 22
     barplot.set_xticklabels([label.get_text()[:lenght]+'...' if len(label.get_text())>lenght else label.get_text() for label in x_labels])
 #endregion
-
+#region Welcome Message
 print("\n╔══════════════════════════════════════════╗")
 print("║  Welcome to the anime analysis program!  ║")
 print("╚══════════════════════════════════════════╝")
-
+#endregion
 #region Top 10 animes by score
 print("\nTop 10 animes by average score:\n")
 filtered_df = df[df['Score'] != 'Unknown'] #Remove Unknown Values
